@@ -125,11 +125,11 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
 
         await updateUserData(
           game.playerO,
-          winResult.winner === "O" ? playerO.scraps + bet : playerO.scraps,
+          winResult.winner === "O" ? playerO.scraps + (bet * 2) : playerO.scraps,
         );
         await updateUserData(
           game.playerX,
-          winResult.winner === "X" ? playerX.scraps + bet : playerX.scraps,
+          winResult.winner === "X" ? playerX.scraps + (bet * 2) : playerX.scraps,
         );
 
         game.remove();
