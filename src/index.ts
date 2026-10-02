@@ -4,7 +4,7 @@ import { Game } from "./game";
 import { hasWon } from "../utils/win";
 import { getUserData, updateUserData } from "../utils/db";
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+export const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, (client: any) => {
 	client.application.commands.create(startGame.data);

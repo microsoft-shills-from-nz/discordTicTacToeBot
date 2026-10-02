@@ -1,3 +1,4 @@
+import { client } from "../index";
 import { getUserLeaderboard } from "../../utils/db";
 
 export const data = {
@@ -13,11 +14,13 @@ export const execute = async (interaction: any) => {
 	let content = "";
 
 	for (const user of leaderboard) {
-		content += `${user.uid}: ${user.scraps}\n`;
+		content += `**${(await client.users.fetch(user.uid)).username}:** ${user.scraps}\n`;
 	}
 
+	const embed = new client.EmbedBuilder().setTitle("Leaderboard").setDescription(content);
+
 	await interaction.followUp({
-		content,
+		embed,
 		ephemeral: false,
 	});
 };
