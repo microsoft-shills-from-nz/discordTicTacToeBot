@@ -33,6 +33,11 @@ export class Game {
       { owner: null, isEmpty: true, powerUp: null },
     ],
   ];
+  isBoardFull(): boolean {
+    if (this.board === null) return false;
+
+    return this.board.every((row) => row.every((cell) => !cell.isEmpty));
+  }
   turn = "X";
   id = Math.random().toString(36).substring(2, 15);
   bet = 0;

@@ -85,6 +85,34 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
       game.modifier = Math.floor(Math.random() * 15);
       console.log(`Modifier: ${game.modifier}`);
 
+      if (game.isBoardFull()){
+        await interaction.message.edit({
+          embeds: game.createEmbeds(),
+          components: [],
+        });
+
+        const bet = game.bet;
+        const playerX = (await getUserData(game.playerX))[0];
+        const playerO = (await getUserData(game.playerO))[0];
+
+        await updateUserData(
+          game.playerO,
+          playerO.scraps += bet
+        );
+        await updateUserData(
+          game.playerX,
+          playerX.scraps += bet
+        );
+
+        game.remove();
+
+        interaction.followUp(
+          "Game over! Bets have been automatically been handled. (TIE)",
+        );
+
+        return;
+      }
+
       if (winResult?.winner) {
         await interaction.message.edit({
           embeds: game.createEmbeds(),
