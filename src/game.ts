@@ -56,30 +56,33 @@ export class Game {
 
 		for (let i = 0; i < 4; i++) {
 			for (let j = 0; j < 4; j++) {
-				if (j === 0) {
-					if (board[i][j].owner === "O") {
-						responseBoard += "# <:o_:1555584951964008499>  ";
-					} else if (board[i][j].owner === "X") {
-						responseBoard += "# <:x_:1555584949392769225>  ";
-					} else {
-						responseBoard += "# <:base:1555580885619708039>  ";
-					}
-				} else if (j === 3) {
-					if (board[i][j].owner === "O") {
-						responseBoard += "<:o_:1555584951964008499>\n";
-					} else if (board[i][j].owner === "X") {
-						responseBoard += "<:x_:1555584949392769225>\n";
-					} else {
-						responseBoard += "<:base:1555580885619708039>\n";
-					}
-				} else {
-					if (board[i][j].owner === "O") {
-						responseBoard += "<:o_:1555584951964008499>  ";
-					} else if (board[i][j].owner === "X") {
-						responseBoard += "<:x_:1555584949392769225>  ";
-					} else {
-						responseBoard += "<:base:1555580885619708039>  ";
-					}
+        switch (j) {
+          case 0:
+       			if (board[i][j].owner === "O") {
+              responseBoard += "# <:o_:1555584951964008499>  ";
+            } else if (board[i][j].owner === "X") {
+              responseBoard += "# <:x_:1555584949392769225>  ";
+            } else {
+              responseBoard += "# <:base:1555580885619708039>  ";
+              }
+            break
+          case 3:
+       			if (board[i][j].owner === "O") {
+              responseBoard += "<:o_:1555584951964008499>\n";
+            } else if (board[i][j].owner === "X") {
+                responseBoard += "<:x_:1555584949392769225>\n";
+            } else {
+                responseBoard += "<:base:1555580885619708039>\n";
+              }
+            break
+          default:
+       			if (board[i][j].owner === "O") {
+              responseBoard += "<:o_:1555584951964008499>  ";
+            } else if (board[i][j].owner === "X") {
+              responseBoard += "<:x_:1555584949392769225>  ";
+            } else {
+              responseBoard += "<:base:1555580885619708039>  ";
+            }
 				}
 			}
 		}
