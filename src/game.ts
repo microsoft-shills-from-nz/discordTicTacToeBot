@@ -105,55 +105,55 @@ export class Game {
 		);
 		const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play00")
+				.setCustomId("play10")
 				.setLabel("1, 0")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play01")
+				.setCustomId("play11")
 				.setLabel("1, 1")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play02")
+				.setCustomId("play12")
 				.setLabel("1, 2")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play03")
+				.setCustomId("play13")
 				.setLabel("1, 3")
 				.setStyle(ButtonStyle.Primary),
 		);
 		const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play00")
+				.setCustomId("play20")
 				.setLabel("2, 0")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play01")
+				.setCustomId("play21")
 				.setLabel("2, 1")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play02")
+				.setCustomId("play22")
 				.setLabel("2, 2")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play03")
+				.setCustomId("play23")
 				.setLabel("2, 3")
 				.setStyle(ButtonStyle.Primary),
 		);
 		const row3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play00")
+				.setCustomId("play30")
 				.setLabel("3, 0")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play01")
+				.setCustomId("play31")
 				.setLabel("3, 1")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play02")
+				.setCustomId("play32")
 				.setLabel("3, 2")
 				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
-				.setCustomId("play03")
+				.setCustomId("play33")
 				.setLabel("3, 3")
 				.setStyle(ButtonStyle.Primary),
 		);
