@@ -13,7 +13,7 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
 		startGame.execute(interaction);
 
 	if (interaction.isButton()) {
-		if (interaction.customId.split("/")[0] === "play") {
+		if (interaction.customId.split(":")[0] === "play") {
 			const uid = interaction.user.id;
 			const gameId = interaction.customId.split("/")[1];
 			const x = interaction.customId.split(":")[1].split("/")[0].split(",")[0];
@@ -45,6 +45,11 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
 				game.board[x][y].owner = game.turn as "X" | "O" | null;
 				game.board[x][y].isEmpty = false;
 				game.turn = game.turn === "X" ? "O" : "X";
+
+				interaction.message.edit({
+					embeds: game.createEmbeds(),
+					components: game.createButtons(),
+				});
 			} else {
 				interaction.followUp({ content: "Not an active game :(", ephemeral: true });
 			}
