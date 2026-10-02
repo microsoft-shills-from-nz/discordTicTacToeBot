@@ -7,7 +7,7 @@
  */
 export type UserData = {
 	id: number;
-	uuid: number;
+	uuid: string;
 	scraps: number;
 	wins: number;
 };
