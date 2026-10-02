@@ -107,7 +107,7 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
         game.remove();
 
         interaction.followUp(
-          "Game over! Bets have been automatically been handled. (TIE)",
+          "Game over! Scrap bets have been automatically been handled. (TIE)",
         );
 
         return;
@@ -135,7 +135,7 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
         game.remove();
 
         interaction.followUp(
-          "Game over! Bets have been automatically been handled.",
+          "Game over! Scrap bets have been automatically been handled.",
         );
         return;
       }

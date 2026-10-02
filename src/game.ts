@@ -101,7 +101,7 @@ export class Game {
         break;
       }
     }
-    if (this.bet !== null) dialog += `\nBet: ${this.bet}`;
+    if (this.bet !== null) dialog += `\nBet: ${this.bet} scrap`;
 
     return dialog;
   }
@@ -121,27 +121,27 @@ export class Game {
         switch (j) {
           case 0:
             if (board[i][j].owner === "O") {
-              responseBoard += "# <:o_:1555584951964008499>  ";
+              responseBoard += "# <:o_:1555708893588492369>  ";
             } else if (board[i][j].owner === "X") {
-              responseBoard += "# <:x_:1555584949392769225>  ";
+              responseBoard += "# <:x_:1555708831944941721>  ";
             } else {
               responseBoard += "# <:base:1555580885619708039>  ";
             }
             break;
           case 3:
             if (board[i][j].owner === "O") {
-              responseBoard += "<:o_:1555584951964008499>\n";
+              responseBoard += "<:o_:1555708893588492369>\n";
             } else if (board[i][j].owner === "X") {
-              responseBoard += "<:x_:1555584949392769225>\n";
+              responseBoard += "<:x_:1555708831944941721>\n";
             } else {
               responseBoard += "<:base:1555580885619708039>\n";
             }
             break;
           default:
             if (board[i][j].owner === "O") {
-              responseBoard += "<:o_:1555584951964008499>  ";
+              responseBoard += "<:o_:1555708893588492369>  ";
             } else if (board[i][j].owner === "X") {
-              responseBoard += "<:x_:1555584949392769225>  ";
+              responseBoard += "<:x_:1555708831944941721>  ";
             } else {
               responseBoard += "<:base:1555580885619708039>  ";
             }
