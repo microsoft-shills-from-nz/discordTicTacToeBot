@@ -16,7 +16,7 @@ export type UserData = {
  * The user's board
  * @property board The user's board
  */
-type BoardCell = {
+export type BoardCell = {
 	owner: "X" | "O" | null;
 	isEmpty: boolean;
 	powerUp: "upShift" | "leftShift" | "replace" | "destroy" | "wipeRow" | "wipeCol" | null;
@@ -36,4 +36,4 @@ type BoardCell = {
  *  	],
  *  ];
  */
-type Board = BoardCell[][];
+export type Board = BoardCell[][];
