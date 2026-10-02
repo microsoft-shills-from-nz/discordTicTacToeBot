@@ -81,21 +81,20 @@ export class Game {
 				}
 			}
 		}
-
-        createButtons() {
-            const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-                new ButtonBuilder()
-                    .setCustomId("accept")
-                    .setLabel("Accept")
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("decline")
-                    .setLabel("Decline")
-                    .setStyle(ButtonStyle.Danger),
-            );
-            return row;
-        }
-
-		return { board: responseBoard, status: true };
+        return { board: responseBoard, status: true}
 	}
+
+    createButtons(): ActionRowBuilder<ButtonBuilder>[] {
+        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+                .setCustomId("accept")
+                .setLabel("Accept")
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("decline")
+                .setLabel("Decline")
+                .setStyle(ButtonStyle.Danger),
+        );
+        return [row];
+    }
 }
