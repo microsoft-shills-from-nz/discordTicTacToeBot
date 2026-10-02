@@ -82,6 +82,8 @@ export class Game {
 				}
 			}
 		}
+		const activePlayer = this.playerX === this.turn ? "X" : this.playerO;
+		responseBoard += `\n<@${activePlayer}>'s turn!`;
 		return { board: responseBoard, status: true };
 	}
 
