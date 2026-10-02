@@ -96,7 +96,7 @@ export class Game {
         break;
       }
     }
-    if (this.bet !== null) dialog += `\nBet: ${this.bet}`;
+    if (this.bet !== null && this.bet > 0) dialog += `\nBet: ${this.bet}`;
 
     return dialog;
   }
