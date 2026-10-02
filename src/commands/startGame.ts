@@ -27,7 +27,7 @@ export const execute = async (interaction: any) => {
 	const opponent = interaction.options.getUser("opponent", true);
 	let game = new Game(interaction.user.id, opponent.id);
 
-	const bet = interaction.options.getInteger("bet", true);
+	const bet = interaction.options.getInteger("bet");
 	if (bet < 0) {
 		await interaction.followUp({
 			content: "Bet must be a positive number!",

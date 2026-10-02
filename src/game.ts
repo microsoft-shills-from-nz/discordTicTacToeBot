@@ -31,9 +31,16 @@ export class Game {
 	turn = "X";
 	id = Math.random().toString(36).substring(2, 15);
 	bet = 0;
-	currentPowerUp = 0;
+	modifier = 999;
 
 	static games: Game[] = [];
+
+    remove() {
+    const gameIndex = Game.games.indexOf(this);
+        if (gameIndex !== -1) {
+            Game.games.splice(gameIndex, 1);
+        }
+    }
 
 	constructor(
 		public playerX: string,
@@ -44,9 +51,48 @@ export class Game {
 
 	createEmbeds(): EmbedBuilder[] {
 		let board = new EmbedBuilder().setDescription(`${this.createBoard().board}\n`);
+		let dialog = new EmbedBuilder().setDescription(`${this.createDialog()}\n`);
 
-		return [board];
+		return [board, dialog];
 	}
+
+    createDialog(board: Board | null = this.board): string {
+        let dialog;
+        switch (this.modifier){
+            case 0: {
+                dialog = "**FALLEN:** All items in the same column will fall 1 tile.";
+                break;
+            }
+            case 1: {
+                dialog = "**SHIFT:** All items in the same row will shift 1 tile to the left.";
+                break;
+            }
+            case 2: {
+                dialog = "**REPLACE:** Replace any of your opponent's placements.";
+                break;
+            }
+            case 3: {
+                dialog = "**ANARCHY:** Destroy a random opponent placement.";
+                break;
+            }
+            case 4: {
+                dialog = "**NUKE:** Destroy all items in the same row";
+                break;
+            }
+            case 5: {
+                dialog = "**SEAMINE:** Destroy all items in the same column";
+                break;
+            }
+            default: {
+                dialog = "No modifiers.";
+                break;
+            }
+        }
+        if (this.bet !== null)
+            dialog += `\nBet: ${this.bet}`;
+
+        return dialog;
+    }
 
 	createBoard(board: Board | null = this.board): { board: string; status: boolean } {
 		let responseBoard = "";
@@ -89,12 +135,11 @@ export class Game {
 		}
 		const activePlayer = this.turn === "X" ? this.playerX : this.playerO;
 		responseBoard += `\n<@${activePlayer}>'s turn!`;
-		responseBoard += `\nPower Up: ${this.currentPowerUp}`;
 		return { board: responseBoard, status: true };
 	}
 
 	checkDisabled(rowNumber: number, columnNumber: number): boolean {
-		if (this.board === null) return false;
+		if (this.board === null || this.modifier === 2) return false;
 		return !this.board[rowNumber][columnNumber].isEmpty;
 	}
 
