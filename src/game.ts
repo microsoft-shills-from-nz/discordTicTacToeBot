@@ -2,7 +2,32 @@ import { EmbedBuilder } from "discord.js";
 import type { Board } from "../utils/types";
 
 export class Game {
-	board: Board | null = null;
+	board: Board | null = [
+		[
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+		],
+		[
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+		],
+		[
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+		],
+		[
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: "O", isEmpty: false, powerUp: null },
+			{ owner: "X", isEmpty: false, powerUp: null },
+		],
+	];
 	turn = "X";
 
 	static games: Game[] = [];
@@ -15,40 +40,48 @@ export class Game {
 	}
 
 	createEmbeds(): EmbedBuilder[] {
-		let board = new EmbedBuilder().setDescription(`${this.createBoard()}\n`);
+		let board = new EmbedBuilder().setDescription(`${this.createBoard().board}\n`);
 
 		return [board];
 	}
 
-	createBoard(): string {
-		let board = "";
+	createBoard(board: Board | null = this.board): { board: string; status: boolean } {
+		let responseBoard = "";
+
+		if (board === null) {
+			return { board: "", status: false };
+		}
+
 		for (let i = 0; i < 4; i++) {
 			for (let j = 0; j < 4; j++) {
 				if (j === 0) {
-					board += "# <:base:1555580885619708039>  ";
+					if (board[i][j].owner === "O") {
+						responseBoard += "# <:o_:1555584951964008499>  ";
+					} else if (board[i][j].owner === "X") {
+						responseBoard += "# <:x_:1555584949392769225>  ";
+					} else {
+						responseBoard += "# <:base:1555580885619708039>  ";
+					}
 				} else if (j === 3) {
-					board += "<:base:1555580885619708039>\n";
+					if (board[i][j].owner === "O") {
+						responseBoard += "<:o_:1555584951964008499>\n";
+					} else if (board[i][j].owner === "X") {
+						responseBoard += "<:x_:1555584949392769225>\n";
+					} else {
+						responseBoard += "<:base:1555580885619708039>\n";
+					}
 				} else {
-					board += "<:base:1555580885619708039>  ";
+					if (board[i][j].owner === "O") {
+						responseBoard += "<:o_:1555584951964008499>  ";
+					} else if (board[i][j].owner === "X") {
+						responseBoard += "<:x_:1555584949392769225>  ";
+					} else {
+						responseBoard += "<:base:1555580885619708039>  ";
+					}
 				}
 			}
 		}
 
-		return board;
+		return { board: responseBoard, status: true };
 	}
 }
-
-enum Behaviour {
-	None,
-	ShiftUp,
-	ShiftLeft,
-	Replace,
-	DestroyRndNearby,
-	WipeRow,
-	WipeColumn,
-}
-
-export type Placement = {
-	value: string; // X or O
-	behaviour: Behaviour;
-};
