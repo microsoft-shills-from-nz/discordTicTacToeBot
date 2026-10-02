@@ -63,7 +63,7 @@ export async function getUserData(uuid: string): Promise<UserData[]> {
 	for (const row of protoRes) {
 		res.push({
 			id: row.id as number,
-			uuid: row.uuid as number,
+			uuid: row.uuid as string,
 			scraps: row.scraps as number,
 			wins: row.wins as number,
 		});
