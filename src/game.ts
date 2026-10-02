@@ -29,6 +29,7 @@ export class Game {
 		],
 	];
 	turn = "X";
+	id = Math.random().toString(36).substring(2, 15);
 
 	static games: Game[] = [];
 
@@ -87,73 +88,73 @@ export class Game {
 	createButtons(): ActionRowBuilder<ButtonBuilder>[] {
 		const row0 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play00")
+				.setCustomId(`play:0,0/${this.id}`)
 				.setLabel("0, 0")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play01")
+				.setCustomId(`play:0,1/${this.id}`)
 				.setLabel("0, 1")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play02")
+				.setCustomId(`play:0,2/${this.id}`)
 				.setLabel("0, 2")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play03")
+				.setCustomId(`play:0,3/${this.id}`)
 				.setLabel("0, 3")
 				.setStyle(ButtonStyle.Secondary),
 		);
 		const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play10")
+				.setCustomId(`play:1,0/${this.id}`)
 				.setLabel("1, 0")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play11")
+				.setCustomId(`play:1,1/${this.id}`)
 				.setLabel("1, 1")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play12")
+				.setCustomId(`play:1,2/${this.id}`)
 				.setLabel("1, 2")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play13")
+				.setCustomId(`play:1,3/${this.id}`)
 				.setLabel("1, 3")
 				.setStyle(ButtonStyle.Secondary),
 		);
 		const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play20")
+				.setCustomId(`play:2,0/${this.id}`)
 				.setLabel("2, 0")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play21")
+				.setCustomId(`play:2,1/${this.id}`)
 				.setLabel("2, 1")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play22")
+				.setCustomId(`play:2,2/${this.id}`)
 				.setLabel("2, 2")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play23")
+				.setCustomId(`play:2,3/${this.id}`)
 				.setLabel("2, 3")
 				.setStyle(ButtonStyle.Secondary),
 		);
 		const row3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
-				.setCustomId("play30")
+				.setCustomId(`play:3,0/${this.id}`)
 				.setLabel("3, 0")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play31")
+				.setCustomId(`play:3,1/${this.id}`)
 				.setLabel("3, 1")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play32")
+				.setCustomId(`play:3,2/${this.id}`)
 				.setLabel("3, 2")
 				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
-				.setCustomId("play33")
+				.setCustomId(`play:3,3/${this.id}`)
 				.setLabel("3, 3")
 				.setStyle(ButtonStyle.Secondary),
 		);
