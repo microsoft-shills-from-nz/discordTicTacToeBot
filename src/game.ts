@@ -4,10 +4,16 @@ import type { Board } from "../utils/types";
 export class Game {
 	board: Board | null = [
 		[
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+		],
+		[
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
 		],
 		[
 			{ owner: null, isEmpty: true, powerUp: null },
@@ -16,16 +22,10 @@ export class Game {
 			{ owner: null, isEmpty: true, powerUp: null },
 		],
 		[
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
-		],
-		[
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
 		],
 	];
 	turn = "X";
@@ -89,73 +89,73 @@ export class Game {
 			new ButtonBuilder()
 				.setCustomId("play00")
 				.setLabel("0, 0")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play01")
 				.setLabel("0, 1")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play02")
 				.setLabel("0, 2")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play03")
 				.setLabel("0, 3")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 		);
 		const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
 				.setCustomId("play10")
 				.setLabel("1, 0")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play11")
 				.setLabel("1, 1")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play12")
 				.setLabel("1, 2")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play13")
 				.setLabel("1, 3")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 		);
 		const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
 				.setCustomId("play20")
 				.setLabel("2, 0")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play21")
 				.setLabel("2, 1")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play22")
 				.setLabel("2, 2")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play23")
 				.setLabel("2, 3")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 		);
 		const row3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
 				.setCustomId("play30")
 				.setLabel("3, 0")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play31")
 				.setLabel("3, 1")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play32")
 				.setLabel("3, 2")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 			new ButtonBuilder()
 				.setCustomId("play33")
 				.setLabel("3, 3")
-				.setStyle(ButtonStyle.Primary),
+				.setStyle(ButtonStyle.Secondary),
 		);
 		return [row0, row1, row2, row3];
 	}
