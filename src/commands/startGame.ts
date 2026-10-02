@@ -26,5 +26,7 @@ export const execute = async (interaction: any) => {
     // DO SCRAP CHECKS HERE
 
     const opponent = interaction.options.getUser("opponent", true);
-    new Game(interaction.user.id, opponent.id);
+    let game = new Game(interaction.user.id, opponent.id);
+
+    await interaction.followUp({ embeds: game.createEmbeds() });
 }
