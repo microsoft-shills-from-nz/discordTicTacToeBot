@@ -1,5 +1,15 @@
-import { getUserData, updateUserData } from "../utils/db";
+import { Client, Events, GatewayIntentBits } from "discord.js";
+import * as startGame from "./commands/startGame";
 
-await updateUserData("1234567890", 0, 50);
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-console.log(await getUserData("1234567890"));
+client.once(Events.ClientReady, (client) => {
+	client.application.commands.create(startGame.data);
+});
+
+client.on(Events.InteractionCreate, (interaction) => {
+	if (interaction.isChatInputCommand() && interaction.commandName === startGame.data.name)
+		startGame.execute(interaction);
+});
+
+client.login(process.env.DISCORD_TOKEN);
