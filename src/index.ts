@@ -7,7 +7,7 @@ client.once(Events.ClientReady, (client: any) => {
 	client.application.commands.create(startGame.data);
 });
 
-client.on(Events.InteractionCreate, (interaction: any) => {
+client.on(Events.InteractionCreate, async (interaction: any) => {
 	if (interaction.isChatInputCommand() && interaction.commandName === startGame.data.name)
 		startGame.execute(interaction);
 
@@ -19,6 +19,8 @@ client.on(Events.InteractionCreate, (interaction: any) => {
 		console.log("gameId: ", gameId);
 		console.log("x: ", x);
 		console.log("y: ", y);
+
+		await interaction.deferReply();
 	}
 });
 
