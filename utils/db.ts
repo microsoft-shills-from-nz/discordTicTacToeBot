@@ -18,29 +18,29 @@ export function getDb(): Client {
 
 /**
  * Update the user data in the database
- * @param uuid The user's discord id
+ * @param uid The user's discord id
  * @param newScraps The new amount of scraps
  * @param newWins The new amount of wins
  * @returns Whether the update was successful
  */
-export async function updateUserData(uuid: string, newScraps: number, newWins: number) {
+export async function updateUserData(uid: string, newScraps?: number, newWins?: number) {
 	try {
-		const user = await getDb().execute("SELECT * FROM users WHERE uuid = ?", [uuid]);
+		const user = await getDb().execute("SELECT * FROM users WHERE uid = ?", [uid]);
 
 		if (user.rows.length === 0) {
 			console.log("User not found, creating new user...");
-			await getDb().execute("INSERT INTO users (uuid, scraps, wins) VALUES (?, ?, ?)", [
-				uuid,
-				newScraps,
-				newWins,
+			await getDb().execute("INSERT INTO users (uid, scraps, wins) VALUES (?, ?, ?)", [
+				uid,
+				newScraps || user.rows[0].scraps,
+				newWins || user.rows[0].wins,
 			]);
 			return true;
 		}
 
-		await getDb().execute("UPDATE users SET scraps = ?, wins = ? WHERE uuid = ?", [
-			newScraps,
-			newWins,
-			uuid,
+		await getDb().execute("UPDATE users SET scraps = ?, wins = ? WHERE uid = ?", [
+			newScraps || user.rows[0].scraps,
+			newWins || user.rows[0].wins,
+			uid,
 		]);
 		return true;
 	} catch (e) {
@@ -50,12 +50,34 @@ export async function updateUserData(uuid: string, newScraps: number, newWins: n
 }
 
 /**
+ * Update the user data in the database
+ * @param uid The user's discord id
+ * @param newScraps The new amount of scraps
+ * @param newWins The new amount of wins
+ * @returns Whether the update was successful
+ */
+export async function addUser(uid: string, scraps: number, wins: number) {
+	try {
+		await getDb().execute("INSERT INTO users (uid, scraps, wins) VALUES (?, ?, ?)", [
+			uid,
+			scraps,
+			wins,
+		]);
+
+		return true;
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+}
+
+/**
  * Get the user data from the database
- * @param uuid The user's discord id
+ * @param uid The user's discord id
  * @returns The user's data
  */
-export async function getUserData(uuid: string): Promise<UserData[]> {
-	const protoRes = (await getDb().execute("SELECT * FROM users WHERE uuid = ?", [uuid]))
+export async function getUserData(uid: string): Promise<UserData[]> {
+	const protoRes = (await getDb().execute("SELECT * FROM users WHERE uid = ?", [uid]))
 		.rows;
 
 	let res: UserData[] = [];
@@ -63,7 +85,37 @@ export async function getUserData(uuid: string): Promise<UserData[]> {
 	for (const row of protoRes) {
 		res.push({
 			id: row.id as number,
-			uuid: row.uuid as number,
+			uid: row.uid as number,
+			scraps: row.scraps as number,
+			wins: row.wins as number,
+		});
+	}
+
+	if (res.length === 0) {
+		await addUser(uid, 10, 0);
+
+		return getUserData(uid);
+	}
+
+	return res;
+}
+
+/**
+ * Get the user data from the database
+ * @param limit The amount of users to get
+ * @returns The user's data
+ */
+export async function getUserLeaderboard(limit: number): Promise<UserData[]> {
+	const protoRes = (
+		await getDb().execute("SELECT * FROM users ORDER BY scraps DESC LIMIT ?", [limit])
+	).rows;
+
+	let res: UserData[] = [];
+
+	for (const row of protoRes) {
+		res.push({
+			id: row.id as number,
+			uid: row.uid as number,
 			scraps: row.scraps as number,
 			wins: row.wins as number,
 		});

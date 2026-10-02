@@ -1,6 +1,8 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as startGame from "./commands/startGame";
 import { Game } from "./game";
+import { hasWon } from "../utils/win";
+import { getUserData, updateUserData } from "../utils/db";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -46,10 +48,29 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
 				game.board[x][y].isEmpty = false;
 				game.turn = game.turn === "X" ? "O" : "X";
 
-				interaction.message.edit({
-					embeds: game.createEmbeds(),
-					components: game.createButtons(),
-				});
+				if (hasWon(game.board)?.winner !== null) {
+					const bet = game.bet;
+					const playerX = (await getUserData(game.playerX))[0];
+					const playerO = (await getUserData(game.playerO))[0];
+					updateUserData(
+						game.playerO,
+						hasWon(game.board)?.winner === "O" ? playerO.scraps + bet : playerO.scraps,
+					);
+					updateUserData(
+						game.playerX,
+						hasWon(game.board)?.winner === "X" ? playerX.scraps + bet : playerX.scraps,
+					);
+
+					interaction.message.edit({
+						embeds: game.createEmbeds(),
+						components: game.createButtons(),
+					});
+				} else {
+					interaction.message.edit({
+						embeds: game.createEmbeds(),
+						components: game.createButtons(),
+					});
+				}
 			} else {
 				interaction.followUp({ content: "Not an active game :(", ephemeral: true });
 			}

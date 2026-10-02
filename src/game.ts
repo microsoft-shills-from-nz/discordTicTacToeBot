@@ -30,6 +30,7 @@ export class Game {
 	];
 	turn = "X";
 	id = Math.random().toString(36).substring(2, 15);
+	bet = 0;
 
 	static games: Game[] = [];
 
@@ -82,7 +83,7 @@ export class Game {
 				}
 			}
 		}
-		const activePlayer = this.playerO === this.turn ? "X" : this.playerX;
+		const activePlayer = this.turn === "X" ? this.playerX : this.playerO;
 		responseBoard += `\n<@${activePlayer}>'s turn!`;
 		return { board: responseBoard, status: true };
 	}

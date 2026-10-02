@@ -1,13 +1,13 @@
 /**
  * The user's data
  * @property id The user's discord id
- * @property uuid The user's uuid
+ * @property uid The user's uid
  * @property scraps The user's amount of scraps
  * @property wins The user's amount of wins
  */
 export type UserData = {
 	id: number;
-	uuid: string;
+	uid: number;
 	scraps: number;
 	wins: number;
 };
