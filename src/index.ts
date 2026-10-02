@@ -1,5 +1,6 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as startGame from "./commands/startGame";
+import * as leaderboard from "./commands/leaderboard";
 import { Game } from "./game";
 import { hasWon } from "../utils/win";
 import { getUserData, updateUserData } from "../utils/db";
@@ -8,11 +9,15 @@ export const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, (client: any) => {
 	client.application.commands.create(startGame.data);
+	client.application.commands.create(leaderboard.data);
 });
 
 client.on(Events.InteractionCreate, async (interaction: any) => {
 	if (interaction.isChatInputCommand() && interaction.commandName === startGame.data.name)
 		startGame.execute(interaction);
+
+    if (interaction.isChatInputCommand() && interaction.commandName === leaderboard.data.name)
+		leaderboard.execute(interaction);
 
 	if (interaction.isButton()) {
 		if (interaction.customId.split(":")[0] === "play") {

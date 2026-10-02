@@ -1,5 +1,6 @@
 import { client } from "../index";
 import { getUserLeaderboard } from "../../utils/db";
+import { EmbedBuilder } from "discord.js";
 
 export const data = {
 	name: "leaderboard",
@@ -14,13 +15,13 @@ export const execute = async (interaction: any) => {
 	let content = "";
 
 	for (const user of leaderboard) {
-		content += `**${(await client.users.fetch(user.uid)).username}:** ${user.scraps}\n`;
+		content += `**${(await client.users.fetch(String(user.uid))).username}:** ${user.scraps}\n`;
 	}
 
-	const embed = new client.EmbedBuilder().setTitle("Leaderboard").setDescription(content);
+	const embed = new EmbedBuilder().setTitle("Leaderboard").setDescription(content);
 
 	await interaction.followUp({
-		embed,
+		embeds: [embed],
 		ephemeral: false,
 	});
 };
