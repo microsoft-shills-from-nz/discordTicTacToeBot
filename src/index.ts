@@ -1,5 +1,6 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as startGame from "./commands/startGame";
+import { Game } from "./game";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -16,11 +17,15 @@ client.on(Events.InteractionCreate, async (interaction: any) => {
 		const x = interaction.customId.split(":")[1].split("/")[0].split(",")[0];
 		const y = interaction.customId.split(":")[1].split("/")[0].split(",")[1];
 
-		console.log("gameId: ", gameId);
-		console.log("x: ", x);
-		console.log("y: ", y);
+		await interaction.deferUpdate();
 
-		await interaction.deferReply();
+		const game = Game.games.find((game: Game) => game.id === gameId);
+
+		if (game) {
+			interaction.followUp({ content: "An active game :)", ephemeral: true });
+		} else {
+			interaction.followUp({ content: "Not an active game :(", ephemeral: true });
+		}
 	}
 });
 
