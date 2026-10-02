@@ -6,10 +6,10 @@
  * @property wins The user's amount of wins
  */
 export type UserData = {
-	id: number;
-	uid: number;
-	scraps: number;
-	wins: number;
+  id: number;
+  uid: number;
+  scraps: number;
+  wins: number;
 };
 
 /**
@@ -17,9 +17,16 @@ export type UserData = {
  * @property board The user's board
  */
 export type BoardCell = {
-	owner: "X" | "O" | null;
-	isEmpty: boolean;
-	powerUp: "upShift" | "leftShift" | "replace" | "destroy" | "wipeRow" | "wipeCol" | null;
+  owner: "X" | "O" | null;
+  isEmpty: boolean;
+  powerUp:
+    | "upShift"
+    | "leftShift"
+    | "replace"
+    | "destroy"
+    | "wipeRow"
+    | "wipeCol"
+    | null;
 };
 
 /**
