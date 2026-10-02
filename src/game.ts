@@ -10,10 +10,10 @@ export class Game {
 			{ owner: "X", isEmpty: false, powerUp: null },
 		],
 		[
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
-			{ owner: "O", isEmpty: false, powerUp: null },
-			{ owner: "X", isEmpty: false, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
+			{ owner: null, isEmpty: true, powerUp: null },
 		],
 		[
 			{ owner: "O", isEmpty: false, powerUp: null },
@@ -81,20 +81,82 @@ export class Game {
 				}
 			}
 		}
-        return { board: responseBoard, status: true}
+		return { board: responseBoard, status: true };
 	}
 
-    createButtons(): ActionRowBuilder<ButtonBuilder>[] {
-        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-            new ButtonBuilder()
-                .setCustomId("accept")
-                .setLabel("Accept")
-                .setStyle(ButtonStyle.Success),
-            new ButtonBuilder()
-                .setCustomId("decline")
-                .setLabel("Decline")
-                .setStyle(ButtonStyle.Danger),
-        );
-        return [row];
-    }
+	createButtons(): ActionRowBuilder<ButtonBuilder>[] {
+		const row0 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setCustomId("play00")
+				.setLabel("0, 0")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play01")
+				.setLabel("0, 1")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play02")
+				.setLabel("0, 2")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play03")
+				.setLabel("0, 3")
+				.setStyle(ButtonStyle.Primary),
+		);
+		const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setCustomId("play00")
+				.setLabel("1, 0")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play01")
+				.setLabel("1, 1")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play02")
+				.setLabel("1, 2")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play03")
+				.setLabel("1, 3")
+				.setStyle(ButtonStyle.Primary),
+		);
+		const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setCustomId("play00")
+				.setLabel("2, 0")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play01")
+				.setLabel("2, 1")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play02")
+				.setLabel("2, 2")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play03")
+				.setLabel("2, 3")
+				.setStyle(ButtonStyle.Primary),
+		);
+		const row3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setCustomId("play00")
+				.setLabel("3, 0")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play01")
+				.setLabel("3, 1")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play02")
+				.setLabel("3, 2")
+				.setStyle(ButtonStyle.Primary),
+			new ButtonBuilder()
+				.setCustomId("play03")
+				.setLabel("3, 3")
+				.setStyle(ButtonStyle.Primary),
+		);
+		return [row0, row1, row2, row3];
+	}
 }
