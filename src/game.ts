@@ -33,6 +33,11 @@ export class Game {
       { owner: null, isEmpty: true, powerUp: null },
     ],
   ];
+  isBoardFull(): boolean {
+    if (this.board === null) return false;
+
+    return this.board.every((row) => row.every((cell) => !cell.isEmpty));
+  }
   turn = "X";
   id = Math.random().toString(36).substring(2, 15);
   bet = 0;
@@ -116,27 +121,27 @@ export class Game {
         switch (j) {
           case 0:
             if (board[i][j].owner === "O") {
-              responseBoard += "# <:o_:1555584951964008499>  ";
+              responseBoard += "# <:o_:1555708893588492369>  ";
             } else if (board[i][j].owner === "X") {
-              responseBoard += "# <:x_:1555584949392769225>  ";
+              responseBoard += "# <:x_:1555708831944941721>  ";
             } else {
               responseBoard += "# <:base:1555580885619708039>  ";
             }
             break;
           case 3:
             if (board[i][j].owner === "O") {
-              responseBoard += "<:o_:1555584951964008499>\n";
+              responseBoard += "<:o_:1555708893588492369>\n";
             } else if (board[i][j].owner === "X") {
-              responseBoard += "<:x_:1555584949392769225>\n";
+              responseBoard += "<:x_:1555708831944941721>\n";
             } else {
               responseBoard += "<:base:1555580885619708039>\n";
             }
             break;
           default:
             if (board[i][j].owner === "O") {
-              responseBoard += "<:o_:1555584951964008499>  ";
+              responseBoard += "<:o_:1555708893588492369>  ";
             } else if (board[i][j].owner === "X") {
-              responseBoard += "<:x_:1555584949392769225>  ";
+              responseBoard += "<:x_:1555708831944941721>  ";
             } else {
               responseBoard += "<:base:1555580885619708039>  ";
             }
