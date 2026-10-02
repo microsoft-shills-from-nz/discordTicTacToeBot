@@ -85,79 +85,37 @@ export class Game {
 		return { board: responseBoard, status: true };
 	}
 
+	checkDisabled(rowNumber: number, columnNumber: number): boolean {
+		if (this.board === null) return false;
+		return !this.board[rowNumber][columnNumber].isEmpty;
+	}
+
+	createRow(rowNumber: number): ActionRowBuilder<ButtonBuilder> {
+		return new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setCustomId(`play:${rowNumber},0/${this.id}`)
+				.setLabel(`0, ${rowNumber}`)
+				.setStyle(ButtonStyle.Secondary)
+				.setDisabled(this.checkDisabled(rowNumber, 0)),
+			new ButtonBuilder()
+				.setCustomId(`play:${rowNumber},1/${this.id}`)
+				.setLabel(`1, ${rowNumber}`)
+				.setStyle(ButtonStyle.Secondary)
+				.setDisabled(this.checkDisabled(rowNumber, 1)),
+			new ButtonBuilder()
+				.setCustomId(`play:${rowNumber},2/${this.id}`)
+				.setLabel(`2, ${rowNumber}`)
+				.setStyle(ButtonStyle.Secondary)
+				.setDisabled(this.checkDisabled(rowNumber, 2)),
+			new ButtonBuilder()
+				.setCustomId(`play:${rowNumber},3/${this.id}`)
+				.setLabel(`3, ${rowNumber}`)
+				.setStyle(ButtonStyle.Secondary)
+				.setDisabled(this.checkDisabled(rowNumber, 3)),
+		);
+	}
+
 	createButtons(): ActionRowBuilder<ButtonBuilder>[] {
-		const row0 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setCustomId(`play:0,0/${this.id}`)
-				.setLabel("0, 0")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:0,1/${this.id}`)
-				.setLabel("0, 1")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:0,2/${this.id}`)
-				.setLabel("0, 2")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:0,3/${this.id}`)
-				.setLabel("0, 3")
-				.setStyle(ButtonStyle.Secondary),
-		);
-		const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setCustomId(`play:1,0/${this.id}`)
-				.setLabel("1, 0")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:1,1/${this.id}`)
-				.setLabel("1, 1")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:1,2/${this.id}`)
-				.setLabel("1, 2")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:1,3/${this.id}`)
-				.setLabel("1, 3")
-				.setStyle(ButtonStyle.Secondary),
-		);
-		const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setCustomId(`play:2,0/${this.id}`)
-				.setLabel("2, 0")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:2,1/${this.id}`)
-				.setLabel("2, 1")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:2,2/${this.id}`)
-				.setLabel("2, 2")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:2,3/${this.id}`)
-				.setLabel("2, 3")
-				.setStyle(ButtonStyle.Secondary),
-		);
-		const row3 = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setCustomId(`play:3,0/${this.id}`)
-				.setLabel("3, 0")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:3,1/${this.id}`)
-				.setLabel("3, 1")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:3,2/${this.id}`)
-				.setLabel("3, 2")
-				.setStyle(ButtonStyle.Secondary),
-			new ButtonBuilder()
-				.setCustomId(`play:3,3/${this.id}`)
-				.setLabel("3, 3")
-				.setStyle(ButtonStyle.Secondary),
-		);
-		return [row0, row1, row2, row3];
+		return [this.createRow(0), this.createRow(1), this.createRow(2), this.createRow(3)];
 	}
 }
