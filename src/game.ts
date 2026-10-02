@@ -1,30 +1,46 @@
 import { EmbedBuilder } from "discord.js";
+import type { Board } from "../utils/types";
 
 export class Game {
-    board: Placement[] = Array(16).fill(null);
-    turn = "X";
+	board: Board | null = null;
+	turn = "X";
 
-    static games: Game[] = [];
+	static games: Game[] = [];
 
-    constructor(public playerX: string, public playerO: string){
-        Game.games.push(this);
-    }
+	constructor(
+		public playerX: string,
+		public playerO: string,
+	) {
+		Game.games.push(this);
+	}
 
-    createEmbeds(): EmbedBuilder[] {
-        let board = new EmbedBuilder()
-            .setDescription(`${this.createBoard()}\n`);
+	createEmbeds(): EmbedBuilder[] {
+		let board = new EmbedBuilder().setDescription(`${this.createBoard()}\n`);
 
-        return [board];
-    }
+		return [board];
+	}
 
-    createBoard(): string {
-        
-    }
+	createBoard(): string {
+		return `
+        <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>\n
+        <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>\n
+        <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>\n
+        <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>  <:base:1555580885619708039>\n
+        `;
+	}
 }
 
-enum Behaviour { None, ShiftUp, ShiftLeft, Replace, DestroyRndNearby, WipeRow, WipeColumn }
+enum Behaviour {
+	None,
+	ShiftUp,
+	ShiftLeft,
+	Replace,
+	DestroyRndNearby,
+	WipeRow,
+	WipeColumn,
+}
 
 export type Placement = {
-    value: string; // X or O
-    behaviour: Behaviour;
-}
+	value: string; // X or O
+	behaviour: Behaviour;
+};
