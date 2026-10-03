@@ -37,7 +37,7 @@ export async function updateUserData(
       console.log("User not found, creating new user...");
       await getDb().execute(
         "INSERT INTO users (uid, scraps, wins) VALUES (?, ?, ?)",
-        [uid, newScraps || user.rows[0].scraps, newWins || user.rows[0].wins],
+        [uid, newScraps ?? user.rows[0].scraps, newWins ?? user.rows[0].wins],
       );
       return true;
     }
