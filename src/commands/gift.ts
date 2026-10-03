@@ -17,7 +17,7 @@ export const data = {
 			description: "How much scraps do you want to give?",
 			type: ApplicationCommandOptionType.Integer,
 			required: true,
-			min_value: 0,
+			min_value: 1,
 		},
 	],
 } as const;
