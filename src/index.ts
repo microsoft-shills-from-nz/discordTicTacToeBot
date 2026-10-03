@@ -1,6 +1,7 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as startGame from "./commands/startGame";
 import * as leaderboard from "./commands/leaderboard";
+import * as gift from "./commands/gift";
 import { Game } from "./game";
 import { hasWon } from "../utils/win";
 import { applyModifier } from "../utils/modifiers";
@@ -9,149 +10,138 @@ import { getUserData, updateUserData } from "../utils/db";
 export const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, (client: any) => {
-  client.application.commands.create(startGame.data);
-  client.application.commands.create(leaderboard.data);
+	client.application.commands.create(startGame.data);
+	client.application.commands.create(leaderboard.data);
+	client.application.commands.create(gift.data);
 });
 
 client.on(Events.InteractionCreate, async (interaction: any) => {
-  if (
-    interaction.isChatInputCommand() &&
-    interaction.commandName === startGame.data.name
-  )
-    startGame.execute(interaction);
+	if (interaction.isChatInputCommand() && interaction.commandName === startGame.data.name)
+		startGame.execute(interaction);
 
-  if (
-    interaction.isChatInputCommand() &&
-    interaction.commandName === leaderboard.data.name
-  )
-    leaderboard.execute(interaction);
+	if (
+		interaction.isChatInputCommand() &&
+		interaction.commandName === leaderboard.data.name
+	)
+		leaderboard.execute(interaction);
 
-  if (interaction.isButton() && interaction.customId.split(":")[0] === "play") {
-    const uid = interaction.user.id;
-    const gameId = interaction.customId.split("/")[1];
-    const [placedRow, placedColumn] = interaction.customId
-      .split(":")[1]
-      .split("/")[0]
-      .split(",")
-      .map(Number);
+	if (interaction.isChatInputCommand() && interaction.commandName === gift.data.name)
+		gift.execute(interaction);
 
-    await interaction.deferUpdate();
+	if (interaction.isButton() && interaction.customId.split(":")[0] === "play") {
+		const uid = interaction.user.id;
+		const gameId = interaction.customId.split("/")[1];
+		const [placedRow, placedColumn] = interaction.customId
+			.split(":")[1]
+			.split("/")[0]
+			.split(",")
+			.map(Number);
 
-    const game = Game.games.find((game: Game) => game.id === gameId);
+		await interaction.deferUpdate();
 
-    if (!game) {
-      interaction.followUp({
-        content: "Not an active game :(",
-        ephemeral: true,
-      });
-      return;
-    }
+		const game = Game.games.find((game: Game) => game.id === gameId);
 
-    if (game.playerO !== uid && game.playerX !== uid) {
-      interaction.followUp({
-        content: "You're not in this game!",
-        ephemeral: true,
-      });
-      return;
-    }
+		if (!game) {
+			interaction.followUp({
+				content: "Not an active game :(",
+				ephemeral: true,
+			});
+			return;
+		}
 
-    if (
-      (game.playerX === uid && game.turn !== "X") ||
-      (game.playerO === uid && game.turn === "X")
-    ) {
-      interaction.followUp({ content: "Not your turn!", ephemeral: true });
-      return;
-    }
+		if (game.playerO !== uid && game.playerX !== uid) {
+			interaction.followUp({
+				content: "You're not in this game!",
+				ephemeral: true,
+			});
+			return;
+		}
 
-    if (game.board === null) return;
+		if (
+			(game.playerX === uid && game.turn !== "X") ||
+			(game.playerO === uid && game.turn === "X")
+		) {
+			interaction.followUp({ content: "Not your turn!", ephemeral: true });
+			return;
+		}
 
-    try {
-      const placingPlayer = game.turn as "X" | "O";
+		if (game.board === null) return;
 
-      game.board[placedRow][placedColumn].owner = placingPlayer;
-      game.board[placedRow][placedColumn].isEmpty = false;
-      game.turn = placingPlayer === "X" ? "O" : "X";
+		try {
+			const placingPlayer = game.turn as "X" | "O";
 
-      applyModifier(
-        game.board,
-        game.modifier,
-        placedRow,
-        placedColumn,
-        placingPlayer,
-      );
+			game.board[placedRow][placedColumn].owner = placingPlayer;
+			game.board[placedRow][placedColumn].isEmpty = false;
+			game.turn = placingPlayer === "X" ? "O" : "X";
 
-      const winResult = hasWon(game.board);
+			applyModifier(game.board, game.modifier, placedRow, placedColumn, placingPlayer);
 
-      game.modifier = Math.floor(Math.random() * 15);
-      console.log(`Modifier: ${game.modifier}`);
+			const winResult = hasWon(game.board);
 
-      if (game.isBoardFull()){
-        await interaction.message.edit({
-          embeds: game.createEmbeds(),
-          components: [],
-        });
+			game.modifier = Math.floor(Math.random() * 15);
+			console.log(`Modifier: ${game.modifier}`);
 
-        const bet = game.bet;
-        const playerX = (await getUserData(game.playerX))[0];
-        const playerO = (await getUserData(game.playerO))[0];
+			if (game.isBoardFull()) {
+				await interaction.message.edit({
+					embeds: game.createEmbeds(),
+					components: [],
+				});
 
-        await updateUserData(
-          game.playerO,
-          playerO.scraps += bet
-        );
-        await updateUserData(
-          game.playerX,
-          playerX.scraps += bet
-        );
+				const bet = game.bet;
+				const playerX = (await getUserData(game.playerX))[0];
+				const playerO = (await getUserData(game.playerO))[0];
 
-        game.remove();
+				await updateUserData(game.playerO, (playerO.scraps += bet));
+				await updateUserData(game.playerX, (playerX.scraps += bet));
 
-        interaction.followUp(
-          "Game over! Scrap bets have been automatically been handled. (TIE)",
-        );
+				game.remove();
 
-        return;
-      }
+				interaction.followUp(
+					"Game over! Scrap bets have been automatically been handled. (TIE)",
+				);
 
-      if (winResult?.winner) {
-        await interaction.message.edit({
-          embeds: game.createEmbeds(),
-          components: [],
-        });
+				return;
+			}
 
-        const bet = game.bet;
-        const playerX = (await getUserData(game.playerX))[0];
-        const playerO = (await getUserData(game.playerO))[0];
+			if (winResult?.winner) {
+				await interaction.message.edit({
+					embeds: game.createEmbeds(),
+					components: [],
+				});
 
-        await updateUserData(
-          game.playerO,
-          winResult.winner === "O" ? playerO.scraps + (bet * 2) : playerO.scraps,
-        );
-        await updateUserData(
-          game.playerX,
-          winResult.winner === "X" ? playerX.scraps + (bet * 2) : playerX.scraps,
-        );
+				const bet = game.bet;
+				const playerX = (await getUserData(game.playerX))[0];
+				const playerO = (await getUserData(game.playerO))[0];
 
-        game.remove();
+				await updateUserData(
+					game.playerO,
+					winResult.winner === "O" ? playerO.scraps + bet * 2 : playerO.scraps,
+				);
+				await updateUserData(
+					game.playerX,
+					winResult.winner === "X" ? playerX.scraps + bet * 2 : playerX.scraps,
+				);
 
-        interaction.followUp(
-          "Game over! Scrap bets have been automatically been handled.",
-        );
-        return;
-      }
+				game.remove();
 
-      await interaction.message.edit({
-        embeds: game.createEmbeds(),
-        components: game.createButtons(),
-      });
-    } catch (error) {
-      console.error("move failed:", error);
-      interaction.followUp({
-        content: "Something broke processing that move. Blame Typescript.",
-        ephemeral: true,
-      });
-    }
-  }
+				interaction.followUp(
+					"Game over! Scrap bets have been automatically been handled.",
+				);
+				return;
+			}
+
+			await interaction.message.edit({
+				embeds: game.createEmbeds(),
+				components: game.createButtons(),
+			});
+		} catch (error) {
+			console.error("move failed:", error);
+			interaction.followUp({
+				content: "Something broke processing that move. Blame Typescript.",
+				ephemeral: true,
+			});
+		}
+	}
 });
 
 client.login(process.env.DISCORD_TOKEN);
