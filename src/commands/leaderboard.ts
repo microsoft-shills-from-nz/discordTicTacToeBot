@@ -15,7 +15,7 @@ export const execute = async (interaction: any) => {
   let content = "";
 
   for (const user of leaderboard) {
-    content += `**${(await client.users.fetch(String(user.uid))).username}:** ${user.scraps}\n`;
+    content += `**${(await client.users.fetch(String(user.uid))).username}:** ${user.scraps} scraps\n`;
   }
 
   const embed = new EmbedBuilder()
