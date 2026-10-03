@@ -33,7 +33,7 @@ export const execute = async (interaction: any) => {
 
 	let content = `You have gifted ${interaction.options.getInteger("amount")} scraps to ${interaction.options.getUser("user").username}!`;
 
-	const embed = new EmbedBuilder().setTitle("Leaderboard").setDescription(content);
+	const embed = new EmbedBuilder().setTitle("Gifted!").setDescription(content);
 
 	await interaction.followUp({
 		embeds: [embed],
