@@ -1,3 +1,4 @@
+import { giftScraps } from "../../utils/db";
 import { client } from "../index";
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 
@@ -25,6 +26,7 @@ export const execute = async (interaction: any) => {
 	await interaction.deferReply();
 
 	giftScraps(
+		interaction.user.id,
 		interaction.options.getUser("user").id,
 		interaction.options.getInteger("amount"),
 	);
