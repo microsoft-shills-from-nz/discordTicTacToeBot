@@ -17,6 +17,7 @@ export const data = {
       description: "How much you're betting",
       type: ApplicationCommandOptionType.Integer,
       required: false,
+      min_value: 0,
     },
   ],
 } as const;
